@@ -1,6 +1,3 @@
-
-
-Choc oh site · HTML
 <!DOCTYPE html>
 <!--
   Choc Oh! Toronto — одностраничный шаблон (структура по мотивам themilkbar.co)
@@ -57,7 +54,7 @@ button{font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;
 .ph[data-tone="5"]{background-image:linear-gradient(160deg,#efe3d4 0%,#c9ab8d 50%,#7a5238 100%)}
 .ph .ph-label{position:absolute;left:10px;bottom:8px;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,.55);pointer-events:none;z-index:1}
 .ph.loaded .ph-label{display:none}
-.ph.loaded{animation:phIn .8s ease}
+.tile .ph.loaded,.card .ph.loaded,.track .ph.loaded,.services .img.loaded{animation:phIn .8s ease}
 @keyframes phIn{from{filter:blur(8px) brightness(.7)}to{filter:none}}
 .card .ph-label{top:10px;bottom:auto}
 .tile .ph-label{display:none}
@@ -76,7 +73,7 @@ button{font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;
 .burger{display:none;width:32px;height:32px;align-items:center;justify-content:flex-end}
 .burger span{display:flex;flex-direction:column;justify-content:space-between;width:25px;height:8px}
 .burger i{display:block;height:1px;background:#fff}
-.mobile-menu{position:fixed;left:0;right:0;top:79px;z-index:99;padding:32px 24px;background:rgba(255,255,255,.55);backdrop-filter:blur(60px);-webkit-backdrop-filter:blur(60px);display:flex;flex-direction:column;gap:24px;font-size:14px;letter-spacing:2.8px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s}
+.mobile-menu{position:fixed;left:0;right:0;top:var(--header-h);z-index:99;padding:32px 24px;background:rgba(255,255,255,.55);backdrop-filter:blur(60px);-webkit-backdrop-filter:blur(60px);display:flex;flex-direction:column;gap:24px;font-size:14px;letter-spacing:2.8px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s}
 .mobile-menu.open{opacity:1;visibility:visible;pointer-events:auto}
 .mobile-menu a,.mobile-menu button{text-align:left}
  
@@ -100,8 +97,9 @@ section{position:relative;width:100%;overflow:hidden}
  
 /* ── 1. Hero ── */
 .hero .right{background:var(--cream);display:flex;align-items:center;padding-top:var(--header-h)}
-.tiles{--tw:clamp(150px,min(15.5vw,calc((100svh - 230px)/2.05)),280px);position:relative;left:-65px;display:flex;gap:12.5px;z-index:3}
+.tiles{--tw:clamp(150px,15.5vw,280px);position:relative;left:-65px;display:flex;gap:12.5px;z-index:3}
 /* phone mockup */
+@supports (height:100svh){.tiles{--tw:clamp(150px,min(15.5vw,calc((100svh - 230px)/2.05)),280px)}.card{--cw:clamp(240px,min(26vw,calc((100svh - var(--header-h) - 120px)/1.25)),460px)}}
 .tile{--u:calc(var(--tw,220px) / 100);position:relative;width:var(--tw,220px);height:calc(var(--tw,220px)*2.05);flex-shrink:0;
   border-radius:calc(var(--u)*17);background:linear-gradient(150deg,#3a322e 0%,#15110f 45%,#2b2420 100%);
   box-shadow:inset 0 0 0 calc(var(--u)*.7) #5c524c,inset 0 0 0 calc(var(--u)*1.6) #0c0a09,0 2px 3px rgba(0,0,0,.25),0 24px 50px rgba(40,20,10,.3);
@@ -151,7 +149,7 @@ section{position:relative;width:100%;overflow:hidden}
 /* ── 3 & 5. Floating cards ── */
 .float-wrap{position:relative;height:100%}
 .float-wrap .bg{position:absolute;top:0;left:0;width:50%;height:100%}
-.card{--cw:clamp(240px,min(26vw,calc((100svh - var(--header-h) - 120px)/1.25)),460px);position:absolute;z-index:3;width:var(--cw);height:calc(var(--cw)*.59);overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.14);cursor:pointer;transform:translate3d(var(--px,0),var(--py,0),0);transition:transform .7s cubic-bezier(.2,.8,.2,1),box-shadow .7s}
+.card{--cw:clamp(240px,26vw,460px);position:absolute;z-index:3;width:var(--cw);height:calc(var(--cw)*.59);overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.14);cursor:pointer;transform:translate3d(var(--px,0),var(--py,0),0);transition:transform .7s cubic-bezier(.2,.8,.2,1),box-shadow .7s}
 .card .ph{position:absolute;inset:0;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
 .card .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(20,10,6,.65));opacity:0;transition:opacity .5s}
 .card .flav{position:absolute;left:18px;right:18px;bottom:14px;z-index:2;color:#fff;font-family:var(--display);font-style:italic;font-size:22px;line-height:1.1;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
@@ -162,7 +160,7 @@ section{position:relative;width:100%;overflow:hidden}
   .card:hover .ph::after,.card:hover .flav{opacity:1;transform:none}
 }
 .m-float .card .flav,.m-float .card .ph::after{opacity:1;transform:none}
-.card:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.card:focus-visible,.tile:focus-visible{outline:2px solid var(--raspberry);outline-offset:4px}
 .c1{left:36%;top:21%}
 .c2{left:68%;top:15%}
 .c3{left:73%;top:56%}
@@ -173,7 +171,7 @@ section{position:relative;width:100%;overflow:hidden}
 /* ── 4. Services ── */
 .services .img{width:50%;height:100%}
 .services .panel{position:relative;width:50%;height:100%;display:flex;align-items:center}
-.services .fade{position:absolute;left:-220px;top:0;height:100%;width:222px;background:linear-gradient(90deg,rgba(242,236,228,0) 0%,rgba(242,236,228,.85) 70%,var(--cream) 100%);z-index:1}
+.services .fade{position:absolute;left:-220px;top:0;height:100%;width:222px;background:linear-gradient(90deg,rgba(240,230,218,0) 0%,rgba(240,230,218,.85) 70%,var(--cream) 100%);z-index:1}
 .services .content{position:relative;z-index:2;left:-120px;width:360px;display:flex;flex-direction:column;gap:45px;padding-top:var(--header-h)}
 .svc{position:relative;display:flex;flex-direction:column;gap:15px;width:310px;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
 .svc::before{content:"";position:absolute;left:-14px;top:0;bottom:0;width:1px;background:var(--raspberry);transform:scaleY(0);transform-origin:top;transition:transform .4s}
@@ -227,7 +225,7 @@ section{position:relative;width:100%;overflow:hidden}
 /* ── Desktop: full-screen snapping sections ── */
 @media (min-width:1024px){
   html{scroll-snap-type:y proximity}
-  main section{height:100svh;min-height:640px;scroll-snap-align:start}
+  main section{height:100vh;height:100svh;min-height:640px;scroll-snap-align:start}
   .overlay-text{left:clamp(40px,8vw,160px);width:clamp(280px,24vw,400px)}
   .gallery .text-col .caption{margin-left:clamp(40px,8vw,160px);width:clamp(280px,26vw,400px)}
   .why .inner{padding-left:clamp(40px,8vw,160px)}
@@ -256,9 +254,10 @@ section{position:relative;width:100%;overflow:hidden}
   .tagline{font-size:13px;letter-spacing:.3px}
   .nav{display:none}.burger{display:flex}
  
-  .m-hero{position:relative;height:calc(var(--header-h) + 36px + 390px + 20px)}
+  .m-hero{position:relative;height:calc(var(--header-h) + 36px + 390px + 32px)}
   .m-hero .bgimg{position:absolute;inset:0 0 auto 0;height:calc(var(--header-h) + 36px + 290px)}
-  .m-strip{position:absolute;top:calc(var(--header-h) + 36px);left:0;right:0;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 16px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+  /* 24px top / 32px bottom breathing room: overflow-x:auto also clips vertically, so the hover lift + shadow need space */
+  .m-strip{position:absolute;top:calc(var(--header-h) + 12px);left:0;right:0;display:flex;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding:24px 16px 32px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
   .m-strip .inner{margin:0 auto}
   .m-strip .tile{scroll-snap-align:center}
   .m-strip .tile:active{transform:scale(.97)}
@@ -272,7 +271,6 @@ section{position:relative;width:100%;overflow:hidden}
   .gallery .rows-col{order:0;width:100%;--card:calc((100vw - 2px)/3);padding-top:var(--header-h)}
   .gallery .rows-col .track .ph{height:calc(var(--card)*1.05)}
   .gallery .rows-col .row.short{max-width:none;width:100%}
-  .row.short{width:calc(var(--card)*2 + 1px)}
   .gallery .text-col{order:1;width:100%;justify-content:center}
   .gallery .text-col .caption{margin:0;padding:36px 24px 56px;align-items:center;text-align:center}
  
@@ -291,7 +289,7 @@ section{position:relative;width:100%;overflow:hidden}
   .services{min-height:720px}
   .services .split{position:relative;min-height:720px}
   .services .img{position:absolute;inset:0;width:100%}
-  .services .panel{position:absolute;right:0;top:0;height:100%;width:70%;padding:0 40px;justify-content:center;background:linear-gradient(90deg,rgba(242,236,228,0) 0%,rgba(242,236,228,.92) 30%,var(--cream) 55%)}
+  .services .panel{position:absolute;right:0;top:0;height:100%;width:70%;padding:0 40px;justify-content:center;background:linear-gradient(90deg,rgba(240,230,218,0) 0%,rgba(240,230,218,.92) 30%,var(--cream) 55%)}
   .services .content{padding-top:40px}
   .services .fade{display:none}
   .services .content{left:0;gap:36px}
@@ -315,7 +313,7 @@ section{position:relative;width:100%;overflow:hidden}
 }
 @keyframes pulse{70%{box-shadow:0 0 0 10px rgba(184,68,92,0)}100%{box-shadow:0 0 0 0 rgba(184,68,92,0)}}
 @media (max-width:640px){
-  .services .panel{width:100%;padding:0 24px;background:linear-gradient(180deg,rgba(242,236,228,.75),rgba(242,236,228,.95))}
+  .services .panel{width:100%;padding:0 24px;background:linear-gradient(180deg,rgba(240,230,218,.75),rgba(240,230,218,.95))}
   .gallery .rows-col{--card:calc((100vw - 2px)/3)}
   .two{grid-template-columns:1fr}
   .form h2{font-size:28px}
@@ -366,9 +364,9 @@ section{position:relative;width:100%;overflow:hidden}
     </div>
     <div class="half right">
       <div class="tiles">
-        <div class="tile" data-open-contact><div class="ph shade" data-img="tile-1.jpg" data-tone="3"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>bar</small>Pistachio Kataifi<br><span class="order">order</span></div></div>
-        <div class="tile" data-open-contact><div class="ph shade" data-img="tile-2.jpg" data-tone="2"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>bonbons</small>Seasonal Box<br><span class="order">order</span></div></div>
-        <div class="tile" data-open-contact><div class="ph shade" data-img="tile-3.jpg" data-tone="4"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>cake</small>Celebration<br><span class="order">order</span></div></div>
+        <div class="tile" data-open-contact tabindex="0" role="button"><div class="ph shade" data-img="tile-1.jpg" data-tone="3"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>bar</small>Pistachio Kataifi<br><span class="order">order</span></div></div>
+        <div class="tile" data-open-contact tabindex="0" role="button"><div class="ph shade" data-img="tile-2.jpg" data-tone="2"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>bonbons</small>Seasonal Box<br><span class="order">order</span></div></div>
+        <div class="tile" data-open-contact tabindex="0" role="button"><div class="ph shade" data-img="tile-3.jpg" data-tone="4"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>cake</small>Celebration<br><span class="order">order</span></div></div>
       </div>
     </div>
   </div>
@@ -377,9 +375,9 @@ section{position:relative;width:100%;overflow:hidden}
     <div class="m-hero">
       <div class="bgimg ph shade" data-img="hero.jpg" data-tone="1"></div>
       <div class="m-strip"><div class="inner">
-        <div class="tile" data-open-contact><div class="ph shade" data-img="tile-1.jpg" data-tone="3"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>bar</small>Pistachio Kataifi<br><span class="order">order</span></div></div>
-        <div class="tile" data-open-contact><div class="ph shade" data-img="tile-2.jpg" data-tone="2"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>bonbons</small>Seasonal Box<br><span class="order">order</span></div></div>
-        <div class="tile" data-open-contact><div class="ph shade" data-img="tile-3.jpg" data-tone="4"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>cake</small>Celebration<br><span class="order">order</span></div></div>
+        <div class="tile" data-open-contact tabindex="0" role="button"><div class="ph shade" data-img="tile-1.jpg" data-tone="3"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>bar</small>Pistachio Kataifi<br><span class="order">order</span></div></div>
+        <div class="tile" data-open-contact tabindex="0" role="button"><div class="ph shade" data-img="tile-2.jpg" data-tone="2"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>bonbons</small>Seasonal Box<br><span class="order">order</span></div></div>
+        <div class="tile" data-open-contact tabindex="0" role="button"><div class="ph shade" data-img="tile-3.jpg" data-tone="4"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>cake</small>Celebration<br><span class="order">order</span></div></div>
       </div></div>
     </div>
     <div class="caption m-caption">
@@ -420,22 +418,22 @@ section{position:relative;width:100%;overflow:hidden}
         <button class="view" type="button" data-open-contact>order</button>
       </div>
     </div>
-    <div class="card c1" tabindex="0" data-open-contact aria-label="Raspberry Rose bonbon"><div class="ph" data-img="card-1.jpg" data-tone="4"></div><div class="flav"><small>raspberry</small>Raspberry Rose</div></div>
-    <div class="card c2" tabindex="0" data-open-contact aria-label="Pistachio Praline bonbon"><div class="ph" data-img="card-2.jpg" data-tone="3"></div><div class="flav"><small>pistachio</small>Pistachio Praline</div></div>
-    <div class="card c3" tabindex="0" data-open-contact aria-label="Madagascar Vanilla bonbon"><div class="ph" data-img="card-3.jpg" data-tone="5"></div><div class="flav"><small>vanilla</small>Madagascar Vanilla</div></div>
-    <div class="card c4" tabindex="0" data-open-contact aria-label="Salted Caramel bonbon"><div class="ph" data-img="card-4.jpg" data-tone="1"></div><div class="flav"><small>caramel</small>Salted Caramel</div></div>
+    <div class="card c1" tabindex="0" role="button" data-open-contact aria-label="Raspberry Rose bonbon"><div class="ph" data-img="card-1.jpg" data-tone="4"></div><div class="flav"><small>raspberry</small>Raspberry Rose</div></div>
+    <div class="card c2" tabindex="0" role="button" data-open-contact aria-label="Pistachio Praline bonbon"><div class="ph" data-img="card-2.jpg" data-tone="3"></div><div class="flav"><small>pistachio</small>Pistachio Praline</div></div>
+    <div class="card c3" tabindex="0" role="button" data-open-contact aria-label="Madagascar Vanilla bonbon"><div class="ph" data-img="card-3.jpg" data-tone="5"></div><div class="flav"><small>vanilla</small>Madagascar Vanilla</div></div>
+    <div class="card c4" tabindex="0" role="button" data-open-contact aria-label="Salted Caramel bonbon"><div class="ph" data-img="card-4.jpg" data-tone="1"></div><div class="flav"><small>caramel</small>Salted Caramel</div></div>
   </div>
   <div class="m-only">
     <div class="m-float">
       <div class="bgimg ph" data-img="bonbons-bg.jpg" data-tone="2"><div class="frost"></div></div>
       <div class="strips">
         <div class="line"><div class="inner">
-          <div class="card" tabindex="0" data-open-contact aria-label="Raspberry Rose bonbon"><div class="ph" data-img="card-1.jpg" data-tone="4"></div><div class="flav"><small>raspberry</small>Raspberry Rose</div></div>
-          <div class="card" tabindex="0" data-open-contact aria-label="Pistachio Praline bonbon"><div class="ph" data-img="card-2.jpg" data-tone="3"></div><div class="flav"><small>pistachio</small>Pistachio Praline</div></div>
+          <div class="card" tabindex="0" role="button" data-open-contact aria-label="Raspberry Rose bonbon"><div class="ph" data-img="card-1.jpg" data-tone="4"></div><div class="flav"><small>raspberry</small>Raspberry Rose</div></div>
+          <div class="card" tabindex="0" role="button" data-open-contact aria-label="Pistachio Praline bonbon"><div class="ph" data-img="card-2.jpg" data-tone="3"></div><div class="flav"><small>pistachio</small>Pistachio Praline</div></div>
         </div></div>
         <div class="line"><div class="inner">
-          <div class="card" tabindex="0" data-open-contact aria-label="Madagascar Vanilla bonbon"><div class="ph" data-img="card-3.jpg" data-tone="5"></div><div class="flav"><small>vanilla</small>Madagascar Vanilla</div></div>
-          <div class="card" tabindex="0" data-open-contact aria-label="Salted Caramel bonbon"><div class="ph" data-img="card-4.jpg" data-tone="1"></div><div class="flav"><small>caramel</small>Salted Caramel</div></div>
+          <div class="card" tabindex="0" role="button" data-open-contact aria-label="Madagascar Vanilla bonbon"><div class="ph" data-img="card-3.jpg" data-tone="5"></div><div class="flav"><small>vanilla</small>Madagascar Vanilla</div></div>
+          <div class="card" tabindex="0" role="button" data-open-contact aria-label="Salted Caramel bonbon"><div class="ph" data-img="card-4.jpg" data-tone="1"></div><div class="flav"><small>caramel</small>Salted Caramel</div></div>
         </div></div>
       </div>
     </div>
@@ -476,9 +474,9 @@ section{position:relative;width:100%;overflow:hidden}
     </div>
     <div class="half right" style="background:var(--cream);display:flex;align-items:center;padding-top:var(--header-h)">
       <div class="tiles">
-        <div class="tile" data-open-contact><div class="ph" data-img="cake-1.jpg" data-tone="5"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>birthday</small>Pink Florals<br><span class="order">enquire</span></div></div>
-        <div class="tile" data-open-contact><div class="ph" data-img="cake-2.jpg" data-tone="2"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>layer cake</small>Black Forest<br><span class="order">enquire</span></div></div>
-        <div class="tile" data-open-contact><div class="ph" data-img="cake-3.jpg" data-tone="1"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>celebration</small>Chocolate Roses<br><span class="order">enquire</span></div></div>
+        <div class="tile" data-open-contact tabindex="0" role="button"><div class="ph" data-img="cake-1.jpg" data-tone="5"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>birthday</small>Pink Florals<br><span class="order">enquire</span></div></div>
+        <div class="tile" data-open-contact tabindex="0" role="button"><div class="ph" data-img="cake-2.jpg" data-tone="2"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>layer cake</small>Black Forest<br><span class="order">enquire</span></div></div>
+        <div class="tile" data-open-contact tabindex="0" role="button"><div class="ph" data-img="cake-3.jpg" data-tone="1"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>celebration</small>Chocolate Roses<br><span class="order">enquire</span></div></div>
       </div>
     </div>
   </div>
@@ -486,9 +484,9 @@ section{position:relative;width:100%;overflow:hidden}
     <div class="m-hero">
       <div class="bgimg ph shade" data-img="cake-bg.jpg" data-tone="4"></div>
       <div class="m-strip"><div class="inner">
-        <div class="tile" data-open-contact><div class="ph" data-img="cake-1.jpg" data-tone="5"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>birthday</small>Pink Florals<br><span class="order">enquire</span></div></div>
-        <div class="tile" data-open-contact><div class="ph" data-img="cake-2.jpg" data-tone="2"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>layer cake</small>Black Forest<br><span class="order">enquire</span></div></div>
-        <div class="tile" data-open-contact><div class="ph" data-img="cake-3.jpg" data-tone="1"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>celebration</small>Chocolate Roses<br><span class="order">enquire</span></div></div>
+        <div class="tile" data-open-contact tabindex="0" role="button"><div class="ph" data-img="cake-1.jpg" data-tone="5"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>birthday</small>Pink Florals<br><span class="order">enquire</span></div></div>
+        <div class="tile" data-open-contact tabindex="0" role="button"><div class="ph" data-img="cake-2.jpg" data-tone="2"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>layer cake</small>Black Forest<br><span class="order">enquire</span></div></div>
+        <div class="tile" data-open-contact tabindex="0" role="button"><div class="ph" data-img="cake-3.jpg" data-tone="1"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>celebration</small>Chocolate Roses<br><span class="order">enquire</span></div></div>
       </div></div>
     </div>
     <div class="caption m-caption">
@@ -607,18 +605,21 @@ section{position:relative;width:100%;overflow:hidden}
  
   // Load photos into slots; keep gradient + label if the file is missing
   const cache = {};
+  const lazy = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { loadPh(e.target); lazy.unobserve(e.target); } }), { rootMargin: '800px 800px' });
   document.querySelectorAll('.ph[data-img]').forEach(el => {
     const file = el.dataset.img;
     const label = document.createElement('span');
     label.className = 'ph-label';
     label.textContent = file;
     el.appendChild(label);
-    const src = PHOTOS[file] || IMG_DIR + file;
-    if (!cache[src]) {
-      cache[src] = new Promise(res => { const i = new Image(); i.decoding = 'async'; i.onload = () => res(true); i.onerror = () => res(false); i.src = src; });
-    }
-    cache[src].then(ok => { if (ok) { el.style.backgroundImage = `url("${src}")`; el.classList.add('loaded'); } });
+    el._src = PHOTOS[file] || IMG_DIR + file;
+    lazy.observe(el);
   });
+  function loadPh(el) {
+    const src = el._src; if (!src || el._req) return; el._req = 1;
+    if (!cache[src]) cache[src] = new Promise(res => { const i = new Image(); i.decoding = 'async'; i.onload = () => res(true); i.onerror = () => res(false); i.src = src; });
+    cache[src].then(ok => { if (ok) { el.style.backgroundImage = `url("${src}")`; el.classList.add('loaded'); } });
+  }
  
   // Hero video: remove if not provided
   document.querySelectorAll('.hero-video').forEach(v => v.addEventListener('error', () => v.remove(), true));
@@ -635,10 +636,12 @@ section{position:relative;width:100%;overflow:hidden}
  
   // Contact modal
   const modal = document.getElementById('contact');
-  const open = () => { modal.classList.add('open'); document.body.style.overflow = 'hidden'; fab && fab.classList.remove('show'); setTimeout(() => modal.querySelector('#f-name').focus(), 350); };
+  const open = () => { loadPh(modal.querySelector('.ph')); modal.classList.add('open'); document.body.style.overflow = 'hidden'; fab && fab.classList.remove('show'); if (matchMedia('(hover:hover)').matches) setTimeout(() => modal.querySelector('#f-name').focus(), 350); };
   const close = () => { modal.classList.remove('open'); document.body.style.overflow = ''; setNav(); };
   document.querySelectorAll('[data-open-contact]').forEach(b => b.addEventListener('click', () => { if (b.classList.contains('card')) { const sel = document.getElementById('f-type'); sel.value = 'Chocolates / bonbons'; const m = document.getElementById('f-msg'); if (!m.value) m.value = 'Interested in: ' + b.getAttribute('aria-label').replace(' bonbon', ''); } open(); }));
   modal.querySelector('.close').addEventListener('click', close);
+  modal.querySelector('.wrap').addEventListener('click', e => { if (e.target === e.currentTarget) close(); });
+  document.addEventListener('click', e => { if (mm.classList.contains('open') && !mm.contains(e.target) && !burger.contains(e.target)) { mm.classList.remove('open'); burger.setAttribute('aria-expanded', false); } });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
  
   // Form → opens email client with the order details (swap for Formspree/Netlify later)
@@ -677,11 +680,11 @@ section{position:relative;width:100%;overflow:hidden}
     });
     fw.addEventListener('mouseleave', () => cards.forEach(c => { c.style.setProperty('--px', '0px'); c.style.setProperty('--py', '0px'); }));
   }
-  document.querySelectorAll('.card[tabindex]').forEach(c => c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.click(); } }));
+  document.querySelectorAll('[data-open-contact][tabindex]').forEach(c => c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.click(); } }));
  
-  document.getElementById('yr').textContent = new Date().getFullYear();
+  const t = new Date(); document.getElementById('f-date').min = new Date(t - t.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+  document.getElementById('yr').textContent = t.getFullYear();
 })();
 </script>
 </body>
 </html>
- 
