@@ -1,0 +1,687 @@
+
+
+Choc oh site · HTML
+<!DOCTYPE html>
+<!--
+  Choc Oh! Toronto — одностраничный шаблон (структура по мотивам themilkbar.co)
+  ─────────────────────────────────────────────────────────────────────────────
+  ФОТО: сейчас подставлены стоковые фото Unsplash (объект PHOTOS в скрипте внизу).
+  Чтобы поставить свои — удалите строку слота в PHOTOS и положите файл в /images.
+  Если фото не загрузилось — показывается шоколадный градиент. Имена слотов:
+    hero.jpg (или hero.mp4 — видео в первом экране, необязательно)
+    tile-1.jpg tile-2.jpg tile-3.jpg          — 3 вертикальные карточки в первом экране
+    gallery-01.jpg … gallery-09.jpg           — тёмная галерея (3 ряда бегущей ленты)
+    bonbons-bg.jpg, card-1.jpg … card-4.jpg    — секция «Bonbons»
+    services-bg.jpg                            — секция «What we make»
+    cake-bg.jpg, cake-1.jpg cake-2.jpg cake-3.jpg — секция «Custom cakes»
+    story.jpg                                  — секция «why choc oh!»
+    contact-bg.jpg                             — фон окна контактов
+  Рекомендуемо: webp/jpg, по длинной стороне 1600–2400 px.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>choc oh! — Handmade. Fresh. Local.</title>
+<meta name="description" content="Choc Oh! Toronto — artisan chocolates, bonbons and custom celebration cakes, handmade in Thornhill.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f0e6da;
+  --ink:#1B1411;
+  --dark:#170700;
+  --cocoa:#1c0e05;
+  --milk:#A87A5A;
+  --pistachio:#A9B388;
+  --raspberry:#B8445C;
+  --line:rgba(27,20,17,.12);
+  --sans:"Jost","Avenir Next","Avenir",Helvetica,Arial,sans-serif;
+  --display:"Cormorant Garamond",Georgia,serif;
+  --header-h:90px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--cream);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;background:none;border:0;cursor:pointer}
+ 
+/* ── Media slots (photo or chocolate-gradient fallback) ── */
+.ph{position:relative;overflow:hidden;background-color:var(--cocoa);background-size:cover;background-position:center}
+.ph[data-tone="1"]{background-image:radial-gradient(120% 90% at 20% 10%,#8a5a3c 0%,#4a2a1c 55%,#241510 100%)}
+.ph[data-tone="2"]{background-image:radial-gradient(110% 90% at 80% 20%,#c9a27f 0%,#8b5e41 45%,#3c2419 100%)}
+.ph[data-tone="3"]{background-image:radial-gradient(100% 100% at 30% 80%,#b8c092 0%,#6f7a52 45%,#2e2a1d 100%)}
+.ph[data-tone="4"]{background-image:radial-gradient(110% 100% at 70% 30%,#d07a8b 0%,#8f3a4d 45%,#2e1418 100%)}
+.ph[data-tone="5"]{background-image:linear-gradient(160deg,#efe3d4 0%,#c9ab8d 50%,#7a5238 100%)}
+.ph .ph-label{position:absolute;left:10px;bottom:8px;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,.55);pointer-events:none;z-index:1}
+.ph.loaded .ph-label{display:none}
+.ph.loaded{animation:phIn .8s ease}
+@keyframes phIn{from{filter:blur(8px) brightness(.7)}to{filter:none}}
+.card .ph-label{top:10px;bottom:auto}
+.tile .ph-label{display:none}
+.shade::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.3);pointer-events:none}
+ 
+/* ── Header ── */
+.header{position:fixed;inset:0 0 auto 0;z-index:100;height:var(--header-h);display:flex;align-items:center;justify-content:space-between;padding:0 60px;background:rgba(255,255,255,.18);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-bottom:1px solid rgba(0,0,0,.08)}
+.wordmark{font-size:38px;line-height:32px;letter-spacing:0;color:#fff;text-transform:lowercase;white-space:nowrap}
+.wordmark .l{font-weight:300}.wordmark .m{font-weight:500}
+.tagline{padding-top:4px;font-size:14px;line-height:22px;color:#fff}
+.nav{display:flex;gap:34px;padding-bottom:6px}
+.nav a,.nav button{font-family:var(--display);font-style:italic;font-size:17px;line-height:32px;color:var(--ink);transition:transform .3s ease,color .4s ease}
+.header.on-dark .nav a,.header.on-dark .nav button{color:#fff}
+.wordmark,.tagline{text-shadow:0 1px 12px rgba(0,0,0,.25)}
+.nav a:hover,.nav button:hover{transform:scale(1.04)}
+.burger{display:none;width:32px;height:32px;align-items:center;justify-content:flex-end}
+.burger span{display:flex;flex-direction:column;justify-content:space-between;width:25px;height:8px}
+.burger i{display:block;height:1px;background:#fff}
+.mobile-menu{position:fixed;left:0;right:0;top:79px;z-index:99;padding:32px 24px;background:rgba(255,255,255,.55);backdrop-filter:blur(60px);-webkit-backdrop-filter:blur(60px);display:flex;flex-direction:column;gap:24px;font-size:14px;letter-spacing:2.8px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s}
+.mobile-menu.open{opacity:1;visibility:visible;pointer-events:auto}
+.mobile-menu a,.mobile-menu button{text-align:left}
+ 
+/* ── Section scaffolding ── */
+section{position:relative;width:100%;overflow:hidden}
+.split{display:flex;height:100%}
+.half{position:relative;width:50%;height:100%}
+.caption{display:flex;flex-direction:column;gap:15px}
+.badge{font-family:var(--display);font-style:italic;font-size:17px;line-height:32px}
+.kicker{font-size:10px;letter-spacing:2px;text-transform:uppercase}
+.kicker b{font-weight:600}
+.lead{font-size:16px;line-height:24px}
+.view{display:inline-flex;width:fit-content;padding:0 10px 6px 0;border-bottom:.5px solid currentColor;font-family:var(--display);font-style:italic;font-size:17px;line-height:32px;transition:transform .3s}
+.view:hover{transform:scale(1.04)}
+.overlay-text{position:absolute;top:0;height:100%;display:flex;flex-direction:column;justify-content:center;left:119px;width:327px;padding-top:var(--header-h);color:#fff;z-index:2}
+ 
+/* Reveal */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.track{animation:none!important}}
+ 
+/* ── 1. Hero ── */
+.hero .right{background:var(--cream);display:flex;align-items:center;padding-top:var(--header-h)}
+.tiles{--tw:clamp(150px,min(15.5vw,calc((100svh - 230px)/2.05)),280px);position:relative;left:-65px;display:flex;gap:12.5px;z-index:3}
+/* phone mockup */
+.tile{--u:calc(var(--tw,220px) / 100);position:relative;width:var(--tw,220px);height:calc(var(--tw,220px)*2.05);flex-shrink:0;
+  border-radius:calc(var(--u)*17);background:linear-gradient(150deg,#3a322e 0%,#15110f 45%,#2b2420 100%);
+  box-shadow:inset 0 0 0 calc(var(--u)*.7) #5c524c,inset 0 0 0 calc(var(--u)*1.6) #0c0a09,0 2px 3px rgba(0,0,0,.25),0 24px 50px rgba(40,20,10,.3);
+  transition:transform .6s cubic-bezier(.2,.8,.2,1),box-shadow .6s}
+.tile::before,.tile::after{content:"";position:absolute;width:calc(var(--u)*1.4);border-radius:2px;background:linear-gradient(90deg,#2a2320,#4d433d)}
+.tile::before{right:calc(var(--u)*-1.1);top:28%;height:14%}
+.tile::after{left:calc(var(--u)*-1.1);top:20%;height:9%;box-shadow:0 calc(var(--u)*13) 0 #3a322e}
+.tile .ph{position:absolute;inset:calc(var(--u)*3.6);border-radius:calc(var(--u)*13.5);background-size:cover;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.tile .screen{position:absolute;inset:calc(var(--u)*3.6);border-radius:calc(var(--u)*13.5);overflow:hidden;pointer-events:none;z-index:2;
+  background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 14%,rgba(0,0,0,0) 55%,rgba(10,5,3,.7) 100%)}
+.tile .screen::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.05) 28%,transparent 42%)}
+.tile .cam{position:absolute;top:calc(var(--u)*3.2);left:50%;width:calc(var(--u)*30);height:calc(var(--u)*8.6);transform:translateX(-50%);border-radius:99px;background:#050404}
+.tile .cam::after{content:"";position:absolute;right:calc(var(--u)*3);top:50%;width:calc(var(--u)*3.4);height:calc(var(--u)*3.4);transform:translateY(-50%);border-radius:50%;background:radial-gradient(circle at 35% 35%,#3b4a6b,#0b0d14 60%)}
+.tile .bar{position:absolute;top:calc(var(--u)*4.6);left:calc(var(--u)*10);right:calc(var(--u)*9);display:flex;justify-content:space-between;align-items:center;color:#fff;font:600 calc(var(--u)*5.2)/1 var(--sans);letter-spacing:.02em}
+.tile .bar i{display:flex;align-items:flex-end;gap:calc(var(--u)*.8);height:calc(var(--u)*4.2)}
+.tile .bar i b{width:calc(var(--u)*1.1);background:#fff;border-radius:1px}
+.tile .bar i b:nth-child(1){height:35%}.tile .bar i b:nth-child(2){height:55%}.tile .bar i b:nth-child(3){height:78%}.tile .bar i b:nth-child(4){height:100%}
+.tile .bar i s{margin-left:calc(var(--u)*2.2);width:calc(var(--u)*9);height:calc(var(--u)*4.4);border:calc(var(--u)*.5) solid rgba(255,255,255,.8);border-radius:calc(var(--u)*1.4);position:relative;align-self:center;
+  background:linear-gradient(90deg,#fff 70%,transparent 70%) content-box;padding:calc(var(--u)*.5)}
+.tile .home{position:absolute;bottom:calc(var(--u)*6);left:50%;width:calc(var(--u)*36);height:calc(var(--u)*1.6);transform:translateX(-50%);border-radius:9px;background:rgba(255,255,255,.85);z-index:3}
+.tile .order{display:inline-block;margin-top:calc(var(--u)*4);padding:calc(var(--u)*2.4) calc(var(--u)*6);border-radius:99px;background:rgba(255,255,255,.92);color:var(--ink);font:500 calc(var(--u)*4.6)/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;font-style:normal}
+/* zoom stays inside the screen: clip-path compensates for scale (1 - 1/1.06)/2 ≈ 2.83% */
+.tile .ph{clip-path:inset(0 round calc(var(--u)*13.5));transition:transform .9s cubic-bezier(.2,.8,.2,1),clip-path .9s cubic-bezier(.2,.8,.2,1)}
+@media (hover:hover) and (pointer:fine){.tile:hover .ph{transform:scale(1.06);clip-path:inset(2.83% round calc(var(--u)*12.74))}}
+.tiles .tile:nth-child(2){transform:translateY(24px)}
+@media (hover:hover) and (pointer:fine){
+  .tile:hover{transform:translateY(-12px) scale(1.03)!important;box-shadow:0 30px 60px rgba(40,20,10,.3)}
+  .tiles .tile:nth-child(2):hover{transform:translateY(12px) scale(1.03)!important}
+}
+.tile-name{position:absolute;left:calc(var(--u)*10);right:calc(var(--u)*10);bottom:calc(var(--u)*14);z-index:3;color:#fff;font-family:var(--display);font-style:italic;font-size:calc(var(--u)*9.5);line-height:1.05}
+.tile-name small{display:block;font-family:var(--sans);font-style:normal;font-size:calc(var(--u)*4.2);letter-spacing:2px;text-transform:uppercase;opacity:.8;margin-bottom:4px}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:0 60%}
+ 
+/* ── 2. Dark gallery ── */
+.gallery{background:var(--dark);color:#fff}
+.gallery .text-col{width:40%;display:flex;align-items:center}
+.gallery .text-col .caption{width:327px;margin-left:119px;padding-top:var(--header-h)}
+.gallery .rows-col{width:60%;padding-top:var(--header-h);display:flex;flex-direction:column;justify-content:center;gap:1px;--card:min(calc((60vw - 4px)/5),calc((100svh - var(--header-h) - 2px)/3))}
+.row{overflow:hidden}
+.row.short{width:calc(var(--card)*3 + 2px);max-width:100%}
+.track{display:flex;gap:1px;width:max-content;animation:marquee 60s linear infinite}
+.row.rev .track{animation-direction:reverse}
+.track .ph{width:var(--card);height:var(--card);flex-shrink:0;transition:filter .5s,transform .5s}
+@media (hover:hover){.rows-col:hover .track{animation-play-state:paused}.rows-col:hover .track .ph{filter:brightness(.55) saturate(.8)}.rows-col .track .ph:hover{filter:none;transform:scale(1.06);z-index:2}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+ 
+/* ── 3 & 5. Floating cards ── */
+.float-wrap{position:relative;height:100%}
+.float-wrap .bg{position:absolute;top:0;left:0;width:50%;height:100%}
+.card{--cw:clamp(240px,min(26vw,calc((100svh - var(--header-h) - 120px)/1.25)),460px);position:absolute;z-index:3;width:var(--cw);height:calc(var(--cw)*.59);overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.14);cursor:pointer;transform:translate3d(var(--px,0),var(--py,0),0);transition:transform .7s cubic-bezier(.2,.8,.2,1),box-shadow .7s}
+.card .ph{position:absolute;inset:0;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.card .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(20,10,6,.65));opacity:0;transition:opacity .5s}
+.card .flav{position:absolute;left:18px;right:18px;bottom:14px;z-index:2;color:#fff;font-family:var(--display);font-style:italic;font-size:22px;line-height:1.1;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
+.card .flav small{display:block;font-family:var(--sans);font-style:normal;font-size:9px;letter-spacing:2px;text-transform:uppercase;opacity:.85;margin-bottom:4px}
+@media (hover:hover) and (pointer:fine){
+  .card:hover{z-index:6;transform:translate3d(var(--px,0),var(--py,0),0) scale(1.12);box-shadow:0 30px 70px rgba(30,15,8,.35)}
+  .card:hover .ph{transform:scale(1.1)}
+  .card:hover .ph::after,.card:hover .flav{opacity:1;transform:none}
+}
+.m-float .card .flav,.m-float .card .ph::after{opacity:1;transform:none}
+.card:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.c1{left:36%;top:21%}
+.c2{left:68%;top:15%}
+.c3{left:73%;top:56%}
+.c4{left:42%;top:62%}
+.frost{position:absolute;inset:0;z-index:1;pointer-events:none;background:rgba(38, 37, 37, 0.716);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.float-wrap .right-fill{position:absolute;right:0;top:0;width:50%;height:100%;background:var(--cream)}
+ 
+/* ── 4. Services ── */
+.services .img{width:50%;height:100%}
+.services .panel{position:relative;width:50%;height:100%;display:flex;align-items:center}
+.services .fade{position:absolute;left:-220px;top:0;height:100%;width:222px;background:linear-gradient(90deg,rgba(242,236,228,0) 0%,rgba(242,236,228,.85) 70%,var(--cream) 100%);z-index:1}
+.services .content{position:relative;z-index:2;left:-120px;width:360px;display:flex;flex-direction:column;gap:45px;padding-top:var(--header-h)}
+.svc{position:relative;display:flex;flex-direction:column;gap:15px;width:310px;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.svc::before{content:"";position:absolute;left:-14px;top:0;bottom:0;width:1px;background:var(--raspberry);transform:scaleY(0);transform-origin:top;transition:transform .4s}
+@media (hover:hover){.svc:hover{transform:translateX(14px)}.svc:hover::before{transform:scaleY(1)}}
+.svc h3{font-weight:400;font-size:12px;letter-spacing:2.4px}
+.svc p{font-size:14px;line-height:24px}
+.cta{display:inline-flex;align-items:center;justify-content:space-between;gap:55px;max-width:180px;padding:12px 0;border-bottom:.4px solid var(--ink);font-style:italic;font-size:14px;letter-spacing:.28px;transition:gap .35s}
+.cta:hover{gap:75px}
+.arrow{position:relative;width:15px;height:1px;background:var(--ink)}
+.arrow::after{content:"";position:absolute;right:-1px;top:50%;width:6px;height:6px;border-top:1px solid var(--ink);border-right:1px solid var(--ink);transform:translateY(-50%) rotate(45deg)}
+ 
+/* ── 6. Why ── */
+.why .veil{position:absolute;top:0;left:0;width:50%;height:100%;display:flex;align-items:center;background:rgba(0,0,0,.25);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:2}
+.why .inner{padding-left:112px;color:#fff;padding-top:var(--header-h)}
+.why .wm{font-size:34px;text-transform:lowercase}
+.why .wm .l{font-weight:300}.why .wm .m{font-weight:500}
+.why .body{margin-top:32px;width:430px;display:flex;flex-direction:column;gap:16px;font-size:14px;line-height:24px}
+ 
+/* ── Footer ── */
+.footer{position:relative;z-index:5;background:var(--ink);color:#fff;padding:0 112px 70px}
+.footer::before{content:"";position:absolute;left:0;right:0;top:-160px;height:160px;background:linear-gradient(0deg,#1B1411,rgba(27,20,17,0));pointer-events:none}
+.footer nav{position:relative;top:-55px;display:flex;flex-direction:column;gap:35px;font-size:12px;letter-spacing:2.8px}
+.footer nav a,.footer nav button{width:fit-content;text-align:left;transition:transform .3s}
+.footer nav a:hover,.footer nav button:hover{transform:scale(1.04)}
+.footer .meta{display:flex;flex-wrap:wrap;gap:12px 40px;font-size:12px;letter-spacing:1px;color:rgba(255,255,255,.55)}
+ 
+/* ── Contact modal ── */
+.modal{position:fixed;inset:0;z-index:200;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .4s}
+.modal.open{visibility:visible;opacity:1;pointer-events:auto}
+.modal .ph{position:absolute;inset:0}
+.modal .ph::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.42);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+.modal .close{position:absolute;top:28px;right:60px;z-index:3;width:40px;height:40px;display:flex;align-items:center;justify-content:center}
+.modal .close span{position:relative;width:18px;height:18px}
+.modal .close i{position:absolute;top:50%;left:0;width:100%;height:1px;background:#fff}
+.modal .close i:first-child{transform:rotate(45deg)}.modal .close i:last-child{transform:rotate(-45deg)}
+.modal .wrap{position:relative;z-index:2;height:100%;overflow-y:auto;display:flex;align-items:center;padding:79px 150px 64px;color:#fff}
+.form{width:420px;display:flex;flex-direction:column;gap:26px}
+.form .badge{color:#fff}
+.form h2{font-weight:300;font-size:34px;line-height:1.1}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:.75}
+.field input,.field select,.field textarea{background:transparent;border:0;border-bottom:.5px solid rgba(255,255,255,.7);color:#fff;font:inherit;font-size:15px;padding:8px 0;outline:none;resize:none}
+.field select option{color:var(--ink)}
+.field input::placeholder,.field textarea::placeholder{color:rgba(255,255,255,.45)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.form .cta{border-color:#fff;color:#fff}.form .cta .arrow,.form .cta .arrow::after{background:#fff;border-color:#fff}
+.form .cta .arrow::after{background:none}
+.direct{font-size:12px;letter-spacing:1px;line-height:20px;opacity:.75}
+.thanks{display:none;font-family:var(--display);font-style:italic;font-size:22px}
+ 
+/* ── Desktop: full-screen snapping sections ── */
+@media (min-width:1024px){
+  html{scroll-snap-type:y proximity}
+  main section{height:100svh;min-height:640px;scroll-snap-align:start}
+  .overlay-text{left:clamp(40px,8vw,160px);width:clamp(280px,24vw,400px)}
+  .gallery .text-col .caption{margin-left:clamp(40px,8vw,160px);width:clamp(280px,26vw,400px)}
+  .why .inner{padding-left:clamp(40px,8vw,160px)}
+  .footer{scroll-snap-align:end}
+  .m-only{display:none!important}
+}
+@media (min-width:1024px) and (max-width:1279px){
+  .tiles{left:-40px;gap:10px}
+  .services .content{left:-80px}
+  .why .body{width:380px}
+}
+@media (min-width:1800px){
+  .lead{font-size:18px;line-height:28px}
+  .kicker{font-size:11px}
+  .svc p,.why .body{font-size:16px;line-height:27px}
+  .svc{width:360px}.services .content{width:400px}
+  .why .body{width:520px}
+}
+ 
+/* ── Mobile / tablet ── */
+@media (max-width:1023px){
+  :root{--header-h:80px}
+  .d-only{display:none!important}
+  .header{padding:0 16px;background:rgba(0,0,0,.3);backdrop-filter:blur(7.5px);-webkit-backdrop-filter:blur(7.5px);border-bottom:1px solid rgba(255,255,255,.4)}
+  .wordmark{font-size:30px;letter-spacing:.5px}
+  .tagline{font-size:13px;letter-spacing:.3px}
+  .nav{display:none}.burger{display:flex}
+ 
+  .m-hero{position:relative;height:calc(var(--header-h) + 36px + 390px + 20px)}
+  .m-hero .bgimg{position:absolute;inset:0 0 auto 0;height:calc(var(--header-h) + 36px + 290px)}
+  .m-strip{position:absolute;top:calc(var(--header-h) + 36px);left:0;right:0;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 16px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+  .m-strip .inner{margin:0 auto}
+  .m-strip .tile{scroll-snap-align:center}
+  .m-strip .tile:active{transform:scale(.97)}
+  .m-strip::-webkit-scrollbar{display:none}
+  .m-strip .inner{display:flex;gap:20px;width:max-content}
+  .m-strip .tile{--tw:190px}
+  .m-caption{align-items:center;text-align:center;padding:40px 24px 48px;gap:10px}
+  .m-caption .lead{max-width:327px}
+ 
+  .gallery .split{flex-direction:column}
+  .gallery .rows-col{order:0;width:100%;--card:calc((100vw - 2px)/3);padding-top:var(--header-h)}
+  .gallery .rows-col .track .ph{height:calc(var(--card)*1.05)}
+  .gallery .rows-col .row.short{max-width:none;width:100%}
+  .row.short{width:calc(var(--card)*2 + 1px)}
+  .gallery .text-col{order:1;width:100%;justify-content:center}
+  .gallery .text-col .caption{margin:0;padding:36px 24px 56px;align-items:center;text-align:center}
+ 
+  .m-float{position:relative;height:420px}
+  .m-float .bgimg{position:absolute;inset:0}
+  .m-float .strips{position:absolute;left:0;right:0;top:75%;transform:translateY(-50%);display:flex;flex-direction:column;gap:20px;z-index:3}
+  .m-float .strips .line{display:flex;overflow-x:auto;scrollbar-width:none;padding-left:16px;scroll-snap-type:x mandatory}
+  .m-float .strips .line .inner{margin:0 auto}
+  .m-float .card{scroll-snap-align:center;transform:none}
+  .m-float .card:active{transform:scale(.97)}
+  .m-float .strips .line::-webkit-scrollbar{display:none}
+  .m-float .strips .line .inner{display:flex;gap:20px;width:max-content;padding-right:16px}
+  .m-float .card{position:relative;left:auto;top:auto;width:min(280px,76vw);height:calc(min(280px,76vw)*.59)}
+  .m-float + .m-caption{padding-top:120px}
+ 
+  .services{min-height:720px}
+  .services .split{position:relative;min-height:720px}
+  .services .img{position:absolute;inset:0;width:100%}
+  .services .panel{position:absolute;right:0;top:0;height:100%;width:70%;padding:0 40px;justify-content:center;background:linear-gradient(90deg,rgba(242,236,228,0) 0%,rgba(242,236,228,.92) 30%,var(--cream) 55%)}
+  .services .content{padding-top:40px}
+  .services .fade{display:none}
+  .services .content{left:0;gap:36px}
+ 
+  .why{min-height:680px}
+  .why .veil{width:100%;background:rgba(0,0,0,.35);backdrop-filter:none;-webkit-backdrop-filter:none}
+  .why .inner{padding:var(--header-h) 40px 40px}
+  .why .body{width:auto;max-width:520px}
+ 
+  .footer{padding:0 24px 96px}
+  .footer::before{height:80px;top:-80px}
+  .modal .close{right:23px;top:22px}
+  .modal .wrap{align-items:flex-start;padding:110px 32px 32px}
+  .form{width:100%}
+}
+.order-fab{display:none}
+@media (max-width:1023px){
+  .order-fab{display:flex;align-items:center;gap:10px;position:fixed;left:50%;bottom:16px;z-index:90;transform:translate(-50%,120px);padding:14px 26px;border-radius:40px;background:var(--ink);color:#fff;font-family:var(--display);font-style:italic;font-size:18px;box-shadow:0 10px 30px rgba(0,0,0,.3);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+  .order-fab.show{transform:translate(-50%,0)}
+  .order-fab i{width:7px;height:7px;border-radius:50%;background:var(--raspberry);box-shadow:0 0 0 0 rgba(184,68,92,.6);animation:pulse 2s infinite}
+}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(184,68,92,0)}100%{box-shadow:0 0 0 0 rgba(184,68,92,0)}}
+@media (max-width:640px){
+  .services .panel{width:100%;padding:0 24px;background:linear-gradient(180deg,rgba(242,236,228,.75),rgba(242,236,228,.95))}
+  .gallery .rows-col{--card:calc((100vw - 2px)/3)}
+  .two{grid-template-columns:1fr}
+  .form h2{font-size:28px}
+  .why .inner{padding:var(--header-h) 24px 40px}
+}
+@media (min-width:641px) and (max-width:1023px){
+  .gallery .rows-col{--card:calc((100vw - 3px)/4)}
+}
+@media (max-width:359px){.wordmark{font-size:26px}.tagline{font-size:11px}}
+@media (prefers-reduced-motion:reduce){.card,.tile,.card .ph{transition:none!important}.order-fab i{animation:none}}
+</style>
+</head>
+<body>
+ 
+<!-- ─────────────── HEADER ─────────────── -->
+<header class="header">
+  <div>
+    <a href="#top" class="wordmark" aria-label="choc oh!"><span class="l">choc</span><span class="m">oh!</span></a>
+    <div class="tagline">Handmade. Fresh. Local.</div>
+  </div>
+  <nav class="nav">
+    <a href="#make">menu</a>
+    <a href="#cakes">custom cakes</a>
+    <button type="button" data-open-contact>contact</button>
+  </nav>
+  <button class="burger" type="button" aria-label="Open menu" aria-expanded="false"><span><i></i><i></i></span></button>
+</header>
+<div class="mobile-menu" id="mmenu">
+  <button type="button" data-open-contact>CONTACT</button>
+  <a href="#make">MENU</a>
+  <a href="#cakes">CUSTOM CAKES</a>
+  <a href="https://www.instagram.com/choc_oh_toronto/" target="_blank" rel="noopener">INSTAGRAM</a>
+</div>
+ 
+<main id="top">
+ 
+<!-- ─────────────── 1. HERO ─────────────── -->
+<section class="hero">
+  <!-- desktop -->
+  <div class="split d-only">
+    <div class="half ph shade" data-img="hero.jpg" data-tone="1">
+      <!-- optional: <video class="hero-video" src="images/hero.mp4" muted loop playsinline autoplay></video> -->
+      <div class="overlay-text caption reveal">
+        <div class="badge">new</div>
+        <div class="kicker">CHOCOLATE · <b>SIGNATURE BAR</b></div>
+        <div class="lead">Our take on the Dubai bar — pistachio and crisp kataifi layered in dark chocolate, with a tangy hit of raspberry.</div>
+      </div>
+    </div>
+    <div class="half right">
+      <div class="tiles">
+        <div class="tile" data-open-contact><div class="ph shade" data-img="tile-1.jpg" data-tone="3"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>bar</small>Pistachio Kataifi<br><span class="order">order</span></div></div>
+        <div class="tile" data-open-contact><div class="ph shade" data-img="tile-2.jpg" data-tone="2"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>bonbons</small>Seasonal Box<br><span class="order">order</span></div></div>
+        <div class="tile" data-open-contact><div class="ph shade" data-img="tile-3.jpg" data-tone="4"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>cake</small>Celebration<br><span class="order">order</span></div></div>
+      </div>
+    </div>
+  </div>
+  <!-- mobile -->
+  <div class="m-only">
+    <div class="m-hero">
+      <div class="bgimg ph shade" data-img="hero.jpg" data-tone="1"></div>
+      <div class="m-strip"><div class="inner">
+        <div class="tile" data-open-contact><div class="ph shade" data-img="tile-1.jpg" data-tone="3"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>bar</small>Pistachio Kataifi<br><span class="order">order</span></div></div>
+        <div class="tile" data-open-contact><div class="ph shade" data-img="tile-2.jpg" data-tone="2"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>bonbons</small>Seasonal Box<br><span class="order">order</span></div></div>
+        <div class="tile" data-open-contact><div class="ph shade" data-img="tile-3.jpg" data-tone="4"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>cake</small>Celebration<br><span class="order">order</span></div></div>
+      </div></div>
+    </div>
+    <div class="caption m-caption">
+      <div class="kicker" style="font-size:12px;letter-spacing:2.4px;font-style:italic;font-weight:500">NEW</div>
+      <div class="kicker">CHOCOLATE · <b>SIGNATURE BAR</b></div>
+      <div class="lead">Our take on the Dubai bar — pistachio and crisp kataifi layered in dark chocolate, with a tangy hit of raspberry.</div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ─────────────── 2. DARK GALLERY ─────────────── -->
+<section class="gallery" data-nav="dark">
+  <div class="split">
+    <div class="text-col">
+      <div class="caption reveal">
+        <div class="kicker">THE SHOP · <b>THORNHILL · TORONTO</b></div>
+        <div class="lead">Small-batch chocolates, bonbons and cakes made by hand every day — come in, taste, and take something home.</div>
+        <a class="view" href="https://www.instagram.com/choc_oh_toronto/" target="_blank" rel="noopener">view</a>
+      </div>
+    </div>
+    <div class="rows-col">
+      <div class="row short rev"><div class="track" data-row="1,2,3"></div></div>
+      <div class="row"><div class="track" data-row="4,5,6,7,8"></div></div>
+      <div class="row short rev"><div class="track" data-row="9,1,5"></div></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ─────────────── 3. BONBONS (floating cards) ─────────────── -->
+<section class="bonbons">
+  <div class="float-wrap d-only">
+    <div class="right-fill"></div>
+    <div class="bg ph" data-img="bonbons-bg.jpg" data-tone="2">
+      <div class="frost"></div>
+      <div class="overlay-text caption reveal">
+        <div class="kicker">BONBONS · <b>HAND-PAINTED</b></div>
+        <div class="lead">Glossy shells, bold colour, fillings that change with the season — from salted caramel to passion fruit.</div>
+        <button class="view" type="button" data-open-contact>order</button>
+      </div>
+    </div>
+    <div class="card c1" tabindex="0" data-open-contact aria-label="Raspberry Rose bonbon"><div class="ph" data-img="card-1.jpg" data-tone="4"></div><div class="flav"><small>raspberry</small>Raspberry Rose</div></div>
+    <div class="card c2" tabindex="0" data-open-contact aria-label="Pistachio Praline bonbon"><div class="ph" data-img="card-2.jpg" data-tone="3"></div><div class="flav"><small>pistachio</small>Pistachio Praline</div></div>
+    <div class="card c3" tabindex="0" data-open-contact aria-label="Madagascar Vanilla bonbon"><div class="ph" data-img="card-3.jpg" data-tone="5"></div><div class="flav"><small>vanilla</small>Madagascar Vanilla</div></div>
+    <div class="card c4" tabindex="0" data-open-contact aria-label="Salted Caramel bonbon"><div class="ph" data-img="card-4.jpg" data-tone="1"></div><div class="flav"><small>caramel</small>Salted Caramel</div></div>
+  </div>
+  <div class="m-only">
+    <div class="m-float">
+      <div class="bgimg ph" data-img="bonbons-bg.jpg" data-tone="2"><div class="frost"></div></div>
+      <div class="strips">
+        <div class="line"><div class="inner">
+          <div class="card" tabindex="0" data-open-contact aria-label="Raspberry Rose bonbon"><div class="ph" data-img="card-1.jpg" data-tone="4"></div><div class="flav"><small>raspberry</small>Raspberry Rose</div></div>
+          <div class="card" tabindex="0" data-open-contact aria-label="Pistachio Praline bonbon"><div class="ph" data-img="card-2.jpg" data-tone="3"></div><div class="flav"><small>pistachio</small>Pistachio Praline</div></div>
+        </div></div>
+        <div class="line"><div class="inner">
+          <div class="card" tabindex="0" data-open-contact aria-label="Madagascar Vanilla bonbon"><div class="ph" data-img="card-3.jpg" data-tone="5"></div><div class="flav"><small>vanilla</small>Madagascar Vanilla</div></div>
+          <div class="card" tabindex="0" data-open-contact aria-label="Salted Caramel bonbon"><div class="ph" data-img="card-4.jpg" data-tone="1"></div><div class="flav"><small>caramel</small>Salted Caramel</div></div>
+        </div></div>
+      </div>
+    </div>
+    <div class="caption m-caption">
+      <div class="kicker">BONBONS · <b>HAND-PAINTED</b></div>
+      <div class="lead">Glossy shells, bold colour, fillings that change with the season — from salted caramel to passion fruit.</div>
+      <button class="view" type="button" data-open-contact>order</button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ─────────────── 4. WHAT WE MAKE ─────────────── -->
+<section class="services" id="make">
+  <div class="split">
+    <div class="img ph" data-img="services-bg.jpg" data-tone="5"></div>
+    <div class="panel">
+      <div class="fade"></div>
+      <div class="content reveal">
+        <div class="kicker" style="font-weight:500">WHAT WE MAKE</div>
+        <div class="svc"><h3>CUSTOM CAKES</h3><p>birthdays, weddings, showers — sculpted and designed around your story</p></div>
+        <div class="svc"><h3>CHOCOLATES &amp; BARS</h3><p>bonbons, signature bars, seasonal collections, tasting boxes</p></div>
+        <div class="svc"><h3>GIFTING &amp; EVENTS</h3><p>corporate gifts, party favours, dessert tables and pop-up markets</p></div>
+        <button class="cta" type="button" data-open-contact>order now <span class="arrow"></span></button>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ─────────────── 5. CUSTOM CAKES (phone-style tiles) ─────────────── -->
+<section class="cakes" id="cakes">
+  <div class="split d-only">
+    <div class="half ph shade" data-img="cake-bg.jpg" data-tone="4">
+      <div class="overlay-text caption reveal">
+        <div class="kicker">CUSTOM CAKES · <b>AS SEEN ON FOOD NETWORK</b></div>
+        <div class="lead">Edible art for every occasion, from the chocolatier and cake artist featured on Holiday Baking Championship.</div>
+        <button class="view" type="button" data-open-contact>enquire</button>
+      </div>
+    </div>
+    <div class="half right" style="background:var(--cream);display:flex;align-items:center;padding-top:var(--header-h)">
+      <div class="tiles">
+        <div class="tile" data-open-contact><div class="ph" data-img="cake-1.jpg" data-tone="5"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>birthday</small>Pink Florals<br><span class="order">enquire</span></div></div>
+        <div class="tile" data-open-contact><div class="ph" data-img="cake-2.jpg" data-tone="2"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>layer cake</small>Black Forest<br><span class="order">enquire</span></div></div>
+        <div class="tile" data-open-contact><div class="ph" data-img="cake-3.jpg" data-tone="1"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>celebration</small>Chocolate Roses<br><span class="order">enquire</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="m-only">
+    <div class="m-hero">
+      <div class="bgimg ph shade" data-img="cake-bg.jpg" data-tone="4"></div>
+      <div class="m-strip"><div class="inner">
+        <div class="tile" data-open-contact><div class="ph" data-img="cake-1.jpg" data-tone="5"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>birthday</small>Pink Florals<br><span class="order">enquire</span></div></div>
+        <div class="tile" data-open-contact><div class="ph" data-img="cake-2.jpg" data-tone="2"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>layer cake</small>Black Forest<br><span class="order">enquire</span></div></div>
+        <div class="tile" data-open-contact><div class="ph" data-img="cake-3.jpg" data-tone="1"></div><span class="screen"></span><span class="cam"></span><span class="bar"><span>10:24</span><i><b></b><b></b><b></b><b></b><s></s></i></span><span class="home"></span><div class="tile-name"><small>celebration</small>Chocolate Roses<br><span class="order">enquire</span></div></div>
+      </div></div>
+    </div>
+    <div class="caption m-caption">
+      <div class="kicker">CUSTOM CAKES · <b>AS SEEN ON FOOD NETWORK</b></div>
+      <div class="lead">Edible art for every occasion, from the chocolatier and cake artist featured on Holiday Baking Championship.</div>
+      <button class="view" type="button" data-open-contact>enquire</button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ─────────────── 6. WHY ─────────────── -->
+<section class="why" data-nav="dark">
+  <div class="ph" data-img="story.jpg" data-tone="1" style="position:absolute;inset:0"></div>
+  <div class="veil">
+    <div class="inner reveal">
+      <div class="badge">why</div>
+      <div class="wm"><span class="l">choc</span><span class="m">oh!</span></div>
+      <div class="body">
+        <div>It started on a kitchen counter — a little girl watching her mother bake birthday cakes, and cleaning the bowl afterwards.</div>
+        <div>That love of chocolate led Delna Patel to train and work in France, before bringing it all home to Toronto.</div>
+        <div>In 2020, when the world stood still, she opened Choc Oh! — a place built around celebrations, cravings and small moments of joy.</div>
+        <div>Everything is still made by hand, in small batches, with the best ingredients we can find.</div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+</main>
+ 
+<!-- ─────────────── FOOTER ─────────────── -->
+<footer class="footer" data-nav="dark">
+  <nav>
+    <button type="button" data-open-contact>CONTACT</button>
+    <a href="#make">MENU</a>
+    <a href="https://www.instagram.com/choc_oh_toronto/" target="_blank" rel="noopener">INSTAGRAM</a>
+  </nav>
+  <div class="meta">
+    <span>Thornhill · Toronto, ON</span>
+    <a href="mailto:hello@chocohtoronto.com">hello@chocohtoronto.com</a>
+    <a href="tel:+16479736987">+1 647 973 6987</a>
+    <span>© <span id="yr"></span> Choc Oh! Toronto</span>
+    <a href="https://unsplash.com" target="_blank" rel="noopener">Photos: Unsplash</a>
+  </div>
+</footer>
+ 
+<button class="order-fab" type="button" data-open-contact><i></i>order now</button>
+ 
+<!-- ─────────────── CONTACT MODAL ─────────────── -->
+<div class="modal" id="contact" role="dialog" aria-modal="true" aria-label="Contact">
+  <div class="ph" data-img="contact-bg.jpg" data-tone="1"></div>
+  <button class="close" type="button" aria-label="Close"><span><i></i><i></i></span></button>
+  <div class="wrap">
+    <form class="form" id="orderForm" novalidate>
+      <div class="badge">say hello</div>
+      <h2>Tell us what you're celebrating</h2>
+      <div class="two">
+        <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" required placeholder="Your name"></div>
+        <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" required placeholder="you@email.com"></div>
+      </div>
+      <div class="two">
+        <div class="field"><label for="f-type">Looking for</label>
+          <select id="f-type" name="type"><option>Custom cake</option><option>Chocolates / bonbons</option><option>Corporate gifting</option><option>Event / dessert table</option><option>Something else</option></select>
+        </div>
+        <div class="field"><label for="f-date">Date needed</label><input id="f-date" name="date" type="date"></div>
+      </div>
+      <div class="field"><label for="f-msg">Details</label><textarea id="f-msg" name="message" rows="3" placeholder="Guests, flavours, theme…"></textarea></div>
+      <button class="cta" type="submit">send <span class="arrow"></span></button>
+      <div class="thanks">Thank you — we'll be in touch soon.</div>
+      <div class="direct">hello@chocohtoronto.com · +1 647 973 6987</div>
+    </form>
+  </div>
+</div>
+ 
+<script>
+(() => {
+  const IMG_DIR = 'images/';
+  // Stock photos (Unsplash License). Replace a URL — or delete the line to use images/<file> instead.
+  const PHOTOS = {
+    'hero.jpg': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=1800',
+    'tile-1.jpg': 'https://images.unsplash.com/photo-1638194645412-1d0b4c53ffed?auto=format&fit=crop&q=80&w=700',
+    'tile-2.jpg': 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?auto=format&fit=crop&q=80&w=700',
+    'tile-3.jpg': 'https://images.unsplash.com/photo-1610670444950-0b29430891b4?auto=format&fit=crop&q=80&w=700',
+    'gallery-01.jpg': 'https://images.unsplash.com/photo-1689150831245-267e43023a70?auto=format&fit=crop&q=80&w=600',
+    'gallery-02.jpg': 'https://images.unsplash.com/photo-1583338917451-face2751d8d5?auto=format&fit=crop&q=80&w=600',
+    'gallery-03.jpg': 'https://images.unsplash.com/photo-1682120501920-7ce18b00237a?auto=format&fit=crop&q=80&w=600',
+    'gallery-04.jpg': 'https://images.unsplash.com/photo-1534432182912-63863115e106?auto=format&fit=crop&q=80&w=600',
+    'gallery-05.jpg': 'https://images.unsplash.com/photo-1656821991459-ae723d90d648?auto=format&fit=crop&q=80&w=600',
+    'gallery-06.jpg': 'https://images.unsplash.com/photo-1711672284661-bd70e38f31b2?auto=format&fit=crop&q=80&w=600',
+    'gallery-07.jpg': 'https://images.unsplash.com/photo-1657502096852-340a75dc56f7?auto=format&fit=crop&q=80&w=600',
+    'gallery-08.jpg': 'https://images.unsplash.com/photo-1610450949065-1f2841536c88?auto=format&fit=crop&q=80&w=600',
+    'gallery-09.jpg': 'https://images.unsplash.com/photo-1646303339019-a57056b180ae?auto=format&fit=crop&q=80&w=600',
+    'bonbons-bg.jpg': 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&q=80&w=1600',
+    'card-1.jpg': 'https://images.unsplash.com/photo-1526823127573-0fda76b6c24f?auto=format&fit=crop&q=80&w=900',
+    'card-2.jpg': 'https://images.unsplash.com/photo-1720029106261-0d0396bb270d?auto=format&fit=crop&q=80&w=900',
+    'card-3.jpg': 'https://images.unsplash.com/photo-1639158924965-7be3bb57506b?auto=format&fit=crop&q=80&w=900',
+    'card-4.jpg': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=900',
+    'services-bg.jpg': 'https://images.unsplash.com/photo-1566565286951-f81c7ba5619d?auto=format&fit=crop&q=80&w=1600',
+    'cake-bg.jpg': 'https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&fit=crop&q=80&w=1600',
+    'cake-1.jpg': 'https://images.unsplash.com/photo-1604413191066-4dd20bedf486?auto=format&fit=crop&q=80&w=700',
+    'cake-2.jpg': 'https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&q=80&w=700',
+    'cake-3.jpg': 'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?auto=format&fit=crop&q=80&w=700',
+    'story.jpg': 'https://images.unsplash.com/photo-1545015451-f05567aa6bcc?auto=format&fit=crop&q=80&w=1800',
+    'contact-bg.jpg': 'https://images.unsplash.com/photo-1626263468007-a9e0cf83f1ac?auto=format&fit=crop&q=80&w=1800'
+  };
+ 
+  // Build gallery marquee rows (content duplicated for seamless loop)
+  document.querySelectorAll('.track[data-row]').forEach(track => {
+    const ids = track.dataset.row.split(',');
+    const tones = ['1','2','3','4','5'];
+    const html = ids.map((n, i) => {
+      const f = 'gallery-' + String(n).padStart(2,'0') + '.jpg';
+      return `<div class="ph" data-img="${f}" data-tone="${tones[(+n + i) % 5]}"></div>`;
+    }).join('');
+    track.innerHTML = html + html + html + html;
+  });
+ 
+  // Load photos into slots; keep gradient + label if the file is missing
+  const cache = {};
+  document.querySelectorAll('.ph[data-img]').forEach(el => {
+    const file = el.dataset.img;
+    const label = document.createElement('span');
+    label.className = 'ph-label';
+    label.textContent = file;
+    el.appendChild(label);
+    const src = PHOTOS[file] || IMG_DIR + file;
+    if (!cache[src]) {
+      cache[src] = new Promise(res => { const i = new Image(); i.decoding = 'async'; i.onload = () => res(true); i.onerror = () => res(false); i.src = src; });
+    }
+    cache[src].then(ok => { if (ok) { el.style.backgroundImage = `url("${src}")`; el.classList.add('loaded'); } });
+  });
+ 
+  // Hero video: remove if not provided
+  document.querySelectorAll('.hero-video').forEach(v => v.addEventListener('error', () => v.remove(), true));
+  document.querySelectorAll('.hero-video').forEach(v => { v.onerror = () => v.remove(); v.querySelector && v.play && v.play().catch(()=>{}); });
+ 
+  // Reveal on scroll
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .25 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+ 
+  // Mobile menu
+  const burger = document.querySelector('.burger'), mm = document.getElementById('mmenu');
+  burger.addEventListener('click', () => { const o = mm.classList.toggle('open'); burger.setAttribute('aria-expanded', o); });
+  mm.querySelectorAll('a,button').forEach(a => a.addEventListener('click', () => { mm.classList.remove('open'); burger.setAttribute('aria-expanded', false); }));
+ 
+  // Contact modal
+  const modal = document.getElementById('contact');
+  const open = () => { modal.classList.add('open'); document.body.style.overflow = 'hidden'; fab && fab.classList.remove('show'); setTimeout(() => modal.querySelector('#f-name').focus(), 350); };
+  const close = () => { modal.classList.remove('open'); document.body.style.overflow = ''; setNav(); };
+  document.querySelectorAll('[data-open-contact]').forEach(b => b.addEventListener('click', () => { if (b.classList.contains('card')) { const sel = document.getElementById('f-type'); sel.value = 'Chocolates / bonbons'; const m = document.getElementById('f-msg'); if (!m.value) m.value = 'Interested in: ' + b.getAttribute('aria-label').replace(' bonbon', ''); } open(); }));
+  modal.querySelector('.close').addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+ 
+  // Form → opens email client with the order details (swap for Formspree/Netlify later)
+  document.getElementById('orderForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target, d = Object.fromEntries(new FormData(f));
+    if (!d.name || !d.email) { f.querySelector(d.name ? '#f-email' : '#f-name').focus(); return; }
+    const body = `Name: ${d.name}\nEmail: ${d.email}\nLooking for: ${d.type}\nDate: ${d.date || '-'}\n\n${d.message || ''}`;
+    location.href = `mailto:hello@chocohtoronto.com?subject=${encodeURIComponent('Order enquiry — ' + d.type)}&body=${encodeURIComponent(body)}`;
+    f.querySelector('.thanks').style.display = 'block';
+  });
+ 
+  // Header nav colour follows the section under it
+  const header = document.querySelector('.header');
+  const navSections = [...document.querySelectorAll('main section, .footer')];
+  const setNav = () => {
+    const y = header.offsetHeight / 2;
+    const cur = navSections.find(s => { const r = s.getBoundingClientRect(); return r.top <= y && r.bottom > y; });
+    header.classList.toggle('on-dark', !!cur && cur.dataset.nav === 'dark');
+    fab && fab.classList.toggle('show', scrollY > innerHeight * .6 && !modal.classList.contains('open'));
+  };
+  const fab = document.querySelector('.order-fab');
+  addEventListener('scroll', setNav, { passive: true }); setNav();
+ 
+  // Bonbon cards: gentle parallax that follows the cursor (desktop only)
+  const fw = document.querySelector('.float-wrap');
+  if (fw && matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    const cards = [...fw.querySelectorAll('.card')], depth = [18, -12, 22, -16];
+    let raf;
+    fw.addEventListener('mousemove', e => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const r = fw.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - .5, dy = (e.clientY - r.top) / r.height - .5;
+        cards.forEach((c, i) => { c.style.setProperty('--px', (dx * depth[i]).toFixed(1) + 'px'); c.style.setProperty('--py', (dy * depth[i]).toFixed(1) + 'px'); });
+      });
+    });
+    fw.addEventListener('mouseleave', () => cards.forEach(c => { c.style.setProperty('--px', '0px'); c.style.setProperty('--py', '0px'); }));
+  }
+  document.querySelectorAll('.card[tabindex]').forEach(c => c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.click(); } }));
+ 
+  document.getElementById('yr').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
+ 
