@@ -1,0 +1,9 @@
+body{margin:0;background:#1c0e05;color:#f0e6da;font:15px/1.5 system-ui,sans-serif}
+main{max-width:900px;margin:0 auto;padding:40px 20px}
+h1{font-weight:500}
+code{background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px}
+button{font:inherit;padding:10px 22px;border-radius:99px;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.12);color:#fff;cursor:pointer}
+#status{margin-left:12px;opacity:.75}
+.row{margin:22px 0;display:flex;flex-direction:column;gap:6px}
+.row img{width:100%;height:auto;background:repeating-conic-gradient(#2b1a12 0 25%,#3a271d 0 50%) 0 0/20px 20px;border-radius:6px}
+.row a{color:#e2788c}
