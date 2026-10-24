@@ -1,0 +1,14 @@
+{
+  "name": "choc-oh-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Choc Oh! Toronto — сайт с парящими 3D-бонбонами и стеклянными карточками",
+  "scripts": {
+    "build": "esbuild src/bonbons.js --bundle --format=iife --minify --alias:three/addons=three/examples/jsm --outfile=js/bonbons.bundle.js",
+    "serve": "python3 -m http.server 8080"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.0",
+    "three": "0.160.0"
+  }
+}
